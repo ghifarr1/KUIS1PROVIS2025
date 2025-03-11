@@ -29,25 +29,39 @@ class FigmaToCodeApp extends StatelessWidget {
 class AkademikPage extends StatelessWidget {
   const AkademikPage({Key? key}) : super(key: key);
 
-  // Fungsi untuk membuat box kecil dengan warna solid dan teks label
-  Widget _buildSmallBox(String label) {
+  // Fungsi untuk membuat grid item yang lebih menarik dengan ikon dan bayangan
+  Widget _buildGridItem(String label, IconData icon) {
     return Container(
       width: 142,
       height: 121,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: const Color(0xFFEEEEEE),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.15),
+            offset: const Offset(0, 4),
+            blurRadius: 4,
+          )
+        ],
       ),
       child: Center(
-        child: Text(
-          label,
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            color: Colors.black,
-            fontSize: 13,
-            fontFamily: 'SF Pro Display',
-            fontWeight: FontWeight.w700,
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, size: 40, color: Colors.black),
+            const SizedBox(height: 8),
+            Text(
+              label,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 13,
+                fontFamily: 'SF Pro Display',
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -72,7 +86,6 @@ class AkademikPage extends StatelessWidget {
           child: Stack(
             children: [
               // BACK BUTTON (kiri atas) dengan warna solid #8E1616
-              // Posisi top diubah menjadi 60 agar sejajar dengan tulisan dashboard.
               Positioned(
                 left: 0,
                 top: 60,
@@ -310,7 +323,7 @@ class AkademikPage extends StatelessWidget {
                   ),
                 ),
               ),
-              // BOX BESAR AKTIVITAS
+              // BOX BESAR AKTIVITAS dengan grid yang telah dihias
               Positioned(
                 left: 28,
                 top: 453,
@@ -323,23 +336,16 @@ class AkademikPage extends StatelessWidget {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    child: GridView.count(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 16,
+                      mainAxisSpacing: 16,
+                      physics: const NeverScrollableScrollPhysics(),
                       children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            _buildSmallBox('Nilai Semester'),
-                            _buildSmallBox('Perwalian'),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            _buildSmallBox('Transkip Nilai'),
-                            _buildSmallBox('Rencana Studi'),
-                          ],
-                        ),
+                        _buildGridItem('Nilai Semester', Icons.assessment),
+                        _buildGridItem('Perwalian', Icons.group),
+                        _buildGridItem('Transkip Nilai', Icons.receipt_long),
+                        _buildGridItem('Rencana Studi', Icons.event_note),
                       ],
                     ),
                   ),

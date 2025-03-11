@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'main.dart'; // Pastikan file main.dart berisi kelas KuisMainPage
+import 'main.dart'; // Pastikan file main.dart berisi kelas KuisMainPage atau KuisProvisApp
 
 void main() {
   runApp(const MentalHealthApp());
@@ -14,8 +14,6 @@ class MentalHealthApp extends StatelessWidget {
     // - Scaffold: 1D1616
     // - Aksen AppBar: 8E1616
     // - Primary (Highlight): FFD65A
-    // - Gradasi/Button: D84040 & FFD65A
-    // - Card Background: EEEEEE
     return MaterialApp(
       title: 'Mental Health Care',
       theme: ThemeData.dark().copyWith(
@@ -43,8 +41,7 @@ class MentalHealthPage extends StatelessWidget {
             } else {
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(
-                    builder: (_) => const KuisProvisApp()),
+                MaterialPageRoute(builder: (_) => const KuisProvisApp()),
               );
             }
           },
@@ -76,7 +73,6 @@ class MentalHealthPage extends StatelessWidget {
   Widget _buildGreetingSection(BuildContext context) {
     return Row(
       children: [
-        // Menggunakan Container berbentuk lingkaran dengan gradasi sebagai pengganti gambar profil
         Container(
           width: 60,
           height: 60,
@@ -106,16 +102,16 @@ class MentalHealthPage extends StatelessWidget {
     );
   }
 
-  // Kartu Mood dengan background gradasi dan informasi teks
+  // Kartu Mood dengan background gradasi, ikon, dan informasi teks
   Widget _buildMoodCardSection(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      color: const Color(0xFFEEEEEE), // Latar card yang terang
+      color: const Color(0xFFEEEEEE),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
           children: [
-            // Menggunakan Container dengan gradasi sebagai placeholder gambar mood
+            // Container bergradasi dengan ikon yang merepresentasikan kesehatan mental
             ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: Container(
@@ -128,6 +124,13 @@ class MentalHealthPage extends StatelessWidget {
                     end: Alignment.bottomCenter,
                   ),
                 ),
+                child: const Center(
+                  child: Icon(
+                    Icons.mood,
+                    size: 40,
+                    color: Color(0xFF1D1616),
+                  ),
+                ),
               ),
             ),
             const SizedBox(width: 16),
@@ -138,9 +141,9 @@ class MentalHealthPage extends StatelessWidget {
                   Text(
                     'Bagaimana perasaanmu hari ini?',
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: const Color(0xFF1D1616),
-                      fontWeight: FontWeight.bold,
-                    ),
+                          color: const Color(0xFF1D1616),
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
                   const SizedBox(height: 8),
                   Text(
@@ -163,7 +166,7 @@ class MentalHealthPage extends StatelessWidget {
                     ),
                     child: const Text(
                       'Mulai Sekarang',
-                      style: TextStyle(fontSize: 12),
+                      style: TextStyle(fontSize: 12, color: Colors.white),
                     ),
                   ),
                 ],
@@ -175,14 +178,29 @@ class MentalHealthPage extends StatelessWidget {
     );
   }
 
-  // Grid topik layanan dengan warna latar dan gradasi untuk tampilan yang menarik
+  // Grid topik layanan dengan menu baru yang relevan untuk lingkungan universitas
   Widget _buildTopicsGrid(BuildContext context) {
-    // Data topik dengan tipe Map<String, dynamic>
     final List<Map<String, dynamic>> topics = [
-      {'title': 'Meditasi', 'color': const Color(0xFFD84040)},
-      {'title': 'Yoga', 'color': const Color(0xFFFFD65A)},
-      {'title': 'Terapi', 'color': const Color(0xFF8E1616)},
-      {'title': 'Relaksasi', 'color': const Color(0xFFEEEEEE)},
+      {
+        'title': 'Meditasi',
+        'color': const Color(0xFFD84040),
+        'icon': Icons.self_improvement,
+      },
+      {
+        'title': 'Pendaftaran Konseling',
+        'color': const Color(0xFFFFD65A),
+        'icon': Icons.app_registration,
+      },
+      {
+        'title': 'Laporkan Kekerasan Seksual',
+        'color': const Color(0xFF8E1616),
+        'icon': Icons.report,
+      },
+      {
+        'title': 'Sumber Daya',
+        'color': const Color(0xFFEEEEEE),
+        'icon': Icons.library_books,
+      },
     ];
 
     return GridView.builder(
@@ -198,27 +216,40 @@ class MentalHealthPage extends StatelessWidget {
       itemBuilder: (context, index) {
         final topic = topics[index];
         return Card(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              // Untuk tampilan gradasi, gunakan gradasi di topik tertentu
               gradient: index % 2 == 0
                   ? const LinearGradient(
-                colors: [Color(0xFFFFD65A), Color(0xFFD84040)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              )
+                      colors: [Color(0xFFFFD65A), Color(0xFFD84040)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    )
                   : null,
               color: index % 2 != 0 ? topic['color'] as Color : null,
             ),
             child: Center(
-              child: Text(
-                topic['title'] as String,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF1D1616),
-                ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    topic['icon'] as IconData,
+                    size: 40,
+                    color: const Color(0xFF1D1616),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    topic['title'] as String,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF1D1616),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

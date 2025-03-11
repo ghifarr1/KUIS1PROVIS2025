@@ -10,29 +10,33 @@ import 'notifikasi.dart';       // NotifikasiPage()
 import 'akademik.dart';         // AkademikPage()
 import 'todolist.dart';         // MyToDoApp()
 
-// Hapus runApp() di sini agar homepage dijadikan widget
 class MyImprovedApp extends StatelessWidget {
   const MyImprovedApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // Tema utama berdasarkan palet warna yang disediakan.
+    // Palet warna:
+    // - 1D1616: Background utama (gelap)
+    // - 8E1616: Aksen AppBar dan elemen pendukung
+    // - FFD65A: Highlight utama (misalnya judul section)
+    // - D84040: Aksen untuk tombol, box atau bagian tertentu
+    // - EEEEEE: Background card yang terang
     final baseTheme = ThemeData(
-      primaryColor: const Color(0xFFD84040),
-      scaffoldBackgroundColor: const Color(0xFFEEEEEE),
+      primaryColor: const Color(0xFFFFD65A),
+      scaffoldBackgroundColor: const Color(0xFF1D1616),
+      appBarTheme: const AppBarTheme(
+        backgroundColor: Color(0xFF8E1616),
+        foregroundColor: Colors.white,
+      ),
       textTheme: const TextTheme(
-        bodyMedium: TextStyle(color: Color(0xFF1D1616)),
+        bodyMedium: TextStyle(color: Color(0xFFEEEEEE)),
+        titleLarge: TextStyle(color: Color(0xFFEEEEEE)),
       ),
     );
 
     return MaterialApp(
       title: 'Dynamic UI Example',
-      theme: baseTheme.copyWith(
-        appBarTheme: baseTheme.appBarTheme.copyWith(
-          backgroundColor: const Color(0xFF8E1616),
-          foregroundColor: Colors.white,
-        ),
-      ),
+      theme: baseTheme,
       // Jadikan HomePage sebagai halaman utama aplikasi
       home: const HomePage(),
     );
@@ -65,27 +69,26 @@ class _HomePageState extends State<HomePage> {
     NewsItem(
       title: 'Beasiswa Sempurna',
       description:
-      'Beasiswa untuk siswa berprestasi.\nMinimal mahasiswa semester 5.\nTap untuk rincian.',
+          'Beasiswa untuk siswa berprestasi.\nMinimal mahasiswa semester 5.\nTap untuk rincian.',
       imageUrl:
-      'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?fit=crop&w=400&q=80',
+          'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?fit=crop&w=400&q=80',
     ),
     NewsItem(
       title: 'Beasiswa Unggulan',
       description:
-      'Terbuka bagi seluruh mahasiswa.\nMenyediakan bantuan dana hingga lulus.\nTap untuk rincian.',
+          'Terbuka bagi seluruh mahasiswa.\nMenyediakan bantuan dana hingga lulus.\nTap untuk rincian.',
       imageUrl:
-      'https://images.unsplash.com/photo-1600891964599-f61ba0e24092?fit=crop&w=400&q=80',
+          'https://images.unsplash.com/photo-1600891964599-f61ba0e24092?fit=crop&w=400&q=80',
     ),
     NewsItem(
       title: 'Beasiswa Maju Bersama',
       description:
-      'Fokus pada bidang teknologi.\nMenerima pendaftar sampai semester akhir.\nTap untuk rincian.',
+          'Fokus pada bidang teknologi.\nMenerima pendaftar sampai semester akhir.\nTap untuk rincian.',
       imageUrl:
-      'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?fit=crop&w=400&q=80',
+          'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?fit=crop&w=400&q=80',
     ),
   ];
 
-  // Indeks berita yang sedang ditampilkan
   int _currentNewsIndex = 0;
 
   // Data pengingat
@@ -104,10 +107,8 @@ class _HomePageState extends State<HomePage> {
     },
   ];
 
-  // Variabel untuk BottomNavigationBar
   int _currentIndex = 0;
 
-  // Fungsi untuk pindah ke berita sebelumnya
   void _prevNews() {
     setState(() {
       if (_currentNewsIndex > 0) {
@@ -116,7 +117,6 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  // Fungsi untuk pindah ke berita berikutnya
   void _nextNews() {
     setState(() {
       if (_currentNewsIndex < _newsList.length - 1) {
@@ -125,7 +125,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  // Mapping fitur berdasarkan label ke route yang sesuai
+  // Mapping fitur ke route yang sesuai
   final Map<String, Widget Function()> featureRoutes = {
     'Mental Health': () => const MentalHealthApp(),
     'Akademik': () => const AkademikPage(),
@@ -140,21 +140,21 @@ class _HomePageState extends State<HomePage> {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.grey.shade200,
+        color: const Color(0xFFEEEEEE), // Menggunakan background terang
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Bagian Gambar
+          // Gambar berita
           Container(
             width: 80,
             height: 80,
             clipBehavior: Clip.antiAlias,
             decoration: BoxDecoration(
-              color: Colors.grey.shade300,
+              color: const Color(0xFFEEEEEE),
               borderRadius: BorderRadius.circular(8),
-              border: Border.all(color: Colors.black54, width: 1.0),
+              border: Border.all(color: const Color(0xFF1D1616), width: 1.0),
             ),
             child: Image.network(
               item.imageUrl,
@@ -162,7 +162,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           const SizedBox(width: 16),
-          // Bagian Teks
+          // Informasi teks
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -172,7 +172,7 @@ class _HomePageState extends State<HomePage> {
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: Colors.black87,
+                    color: Color(0xFF1D1616),
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -180,20 +180,20 @@ class _HomePageState extends State<HomePage> {
                   item.description,
                   style: const TextStyle(
                     fontSize: 13,
-                    color: Colors.black54,
+                    color: Color(0xFF1D1616),
                   ),
                 ),
               ],
             ),
           ),
           const SizedBox(width: 8),
-          // Tombol Panah
+          // Navigasi berita
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               IconButton(
                 icon: const Icon(Icons.chevron_left),
-                color: _currentNewsIndex == 0 ? Colors.grey : Colors.black54,
+                color: _currentNewsIndex == 0 ? Colors.grey : const Color(0xFF1D1616),
                 onPressed: _currentNewsIndex == 0 ? null : _prevNews,
               ),
               const SizedBox(height: 8),
@@ -201,7 +201,7 @@ class _HomePageState extends State<HomePage> {
                 icon: const Icon(Icons.chevron_right),
                 color: _currentNewsIndex == _newsList.length - 1
                     ? Colors.grey
-                    : Colors.black54,
+                    : const Color(0xFF1D1616),
                 onPressed: _currentNewsIndex == _newsList.length - 1 ? null : _nextNews,
               ),
             ],
@@ -229,6 +229,7 @@ class _HomePageState extends State<HomePage> {
               borderRadius: BorderRadius.circular(10),
             ),
             elevation: 2,
+            color: const Color(0xFFEEEEEE),
             child: Padding(
               padding: const EdgeInsets.all(12),
               child: Column(
@@ -247,8 +248,7 @@ class _HomePageState extends State<HomePage> {
                     data['subtitle'] ?? '',
                     style: const TextStyle(
                       fontSize: 13,
-                      fontWeight: FontWeight.normal,
-                      color: Colors.black54,
+                      color: Color(0xFF1D1616),
                     ),
                   ),
                 ],
@@ -266,17 +266,17 @@ class _HomePageState extends State<HomePage> {
       {
         'icon': Icons.favorite,
         'label': 'Mental Health',
-        'color': const Color(0xFFFFD65A),
+        'color': const Color(0xFF8E1616),
       },
       {
         'icon': Icons.school,
         'label': 'Akademik',
-        'color': const Color(0xFFD84040),
+        'color': const Color(0xFFFFD65A),
       },
       {
         'icon': Icons.account_balance_wallet,
         'label': 'Keuangan',
-        'color': const Color(0xFF8E1616),
+        'color': const Color(0xFFD84040),
       },
       {
         'icon': Icons.computer,
@@ -347,7 +347,7 @@ class _HomePageState extends State<HomePage> {
           style: const TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.bold,
-            color: Color(0xFF1D1616),
+            color: Colors.white,
           ),
         ),
       ],
@@ -356,16 +356,18 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+    
     return Scaffold(
-      // AppBar dengan pencarian, ikon profil, dan tombol back yang memeriksa kondisi pop
+      // AppBar dengan search field dan ikon profil
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back_ios_rounded,
-            color: Colors.black,
+            color: Color(0xFF1D1616),
           ),
           onPressed: () {
-            // Jika bisa pop, gunakan Navigator.pop, kalau tidak, kembali ke KuisMainPage
             if (Navigator.canPop(context)) {
               Navigator.pop(context);
             } else {
@@ -379,15 +381,15 @@ class _HomePageState extends State<HomePage> {
         title: Container(
           height: 40,
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.1),
+            color: const Color(0xFFEEEEEE).withOpacity(0.1),
             borderRadius: BorderRadius.circular(10),
           ),
           child: TextField(
-            style: const TextStyle(color: Colors.white),
+            style: const TextStyle(color: Color(0xFFEEEEEE)),
             decoration: InputDecoration(
               hintText: 'Cari pengumuman, materi kuliah...',
-              hintStyle: const TextStyle(color: Colors.white70),
-              prefixIcon: const Icon(Icons.search, color: Colors.white),
+              hintStyle: const TextStyle(color: Color(0xFFEEEEEE)),
+              prefixIcon: const Icon(Icons.search, color: Color(0xFFEEEEEE)),
               border: InputBorder.none,
             ),
           ),
@@ -411,9 +413,9 @@ class _HomePageState extends State<HomePage> {
               Text(
                 'Informasi Terkini',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  color: const Color(0xFF1D1616),
-                  fontWeight: FontWeight.bold,
-                ),
+                      color: const Color(0xFFFFD65A),
+                      fontWeight: FontWeight.bold,
+                    ),
               ),
               const SizedBox(height: 8),
               _buildBeritaTerkiniCarousel(),
@@ -422,9 +424,9 @@ class _HomePageState extends State<HomePage> {
               Text(
                 'Pengingat',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  color: const Color(0xFF1D1616),
-                  fontWeight: FontWeight.bold,
-                ),
+                      color: const Color(0xFFFFD65A),
+                      fontWeight: FontWeight.bold,
+                    ),
               ),
               const SizedBox(height: 8),
               _buildReminders(),
@@ -433,9 +435,9 @@ class _HomePageState extends State<HomePage> {
               Text(
                 'Fitur',
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  color: const Color(0xFF1D1616),
-                  fontWeight: FontWeight.bold,
-                ),
+                      color: const Color(0xFFFFD65A),
+                      fontWeight: FontWeight.bold,
+                    ),
               ),
               const SizedBox(height: 8),
               _buildFeatureGrid(),
