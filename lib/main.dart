@@ -119,6 +119,15 @@ class KuisMainPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
+            Text(
+              'Kelompok 5',
+              style: TextStyle(
+                color: kHighlightColor,
+                fontSize: 16,
+                fontStyle: FontStyle.italic,
+              ),
+            ),
+            const SizedBox(height: 16),
             // List menu
             Expanded(
               child: ListView.builder(
